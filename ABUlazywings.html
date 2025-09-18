@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ABU Past Questions Hub — Ultimate Portal</title>
+
+  <!-- Google Fonts: Playfair Display (headings) + Lato (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================
+       THEME & RESET
+       ========================= */
+    :root{
+      --navy:#071A33;      /* strong Oxford-like */
+      --maroon:#6E2626;    /* academic maroon */
+      --gold:#C9AD63;      /* elegant gold accent */
+      --ivory:#F6F5F2;     /* page background */
+      --muted:#6B7280;     /* secondary text */
+      --card:#FFFFFF;
+      --maxw:1400px;
+      --radius:14px;
+      --shadow:0 20px 60px rgba(10,15,25,0.08);
+      --ease:cubic-bezier(.16,.84,.36,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:"Lato",system-ui,Arial,Helvetica;background:var(--ivory);color:#0a1b24;-webkit-font-smoothing:antialiased}
+    h1,h2,h3,h4{font-family:"Playfair Display",serif;color:var(--navy);margin-bottom:.5rem}
+    p{margin-bottom:.8rem;color:#263238}
+    a{color:var(--navy);text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* =========================
+       LAYOUT HELPERS
+       ========================= */
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+    .row{display:flex;gap:22px;flex-wrap:wrap}
+    .col{flex:1 1 0}
+
+    /* =========================
+       TOP NAV
+       ========================= */
+    header.topbar{position:sticky;top:0;z-index:250;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.95));backdrop-filter:blur(6px);border-bottom:1px solid rgba(8,16,24,0.04)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand img{width:76px;height:76px;border-radius:12px;object-fit:cover;box-shadow:0 10px 30px rgba(8,12,20,0.06)}
+    .brand h4{font-size:18px;margin:0;color:var(--navy);letter-spacing:.2px}
+    nav.nav-links{display:flex;gap:16px;align-items:center}
+    nav.nav-links a{padding:10px 12px;border-radius:10px;color:#0b2130;font-weight:600}
+    .nav-actions{display:flex;gap:10px;align-items:center}
+    .btn{background:var(--navy);color:white;padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    .btn.ghost{background:transparent;color:var(--navy);border:1px solid rgba(8,16,24,0.06)}
+
+    /* =========================
+       HERO: mega slider + parallax
+       ========================= */
+    .hero{position:relative;min-height:820px;overflow:hidden;margin-bottom:28px;border-bottom:1px solid rgba(8,16,24,0.03)}
+    .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .9s var(--ease);filter:brightness(.64) contrast(.95);will-change:transform}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,26,51,0.46), rgba(7,26,51,0.08));z-index:2}
+    .hero-inner{position:relative;z-index:3;padding:84px 28px;max-width:var(--maxw);margin:0 auto;display:flex;gap:36px;align-items:flex-start}
+    .hero-left{flex:1;max-width:780px}
+    .hero-right{width:420px;min-width:320px}
+    .kicker{display:inline-block;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,0.06);color:#fff;font-weight:800;margin-bottom:12px}
+    .hero h1{font-size:56px;color:#fff;line-height:1.02;margin-bottom:12px;text-shadow:0 30px 80px rgba(5,10,20,0.6)}
+    .hero p{color:rgba(255,255,255,0.92);font-size:18px;max-width:700px}
+    .hero-ctas{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .cta-primary{background:linear-gradient(90deg,var(--maroon),#4a1616);color:#fff;padding:12px 18px;border-radius:12px;border:none;font-weight:800;cursor:pointer}
+    .cta-alt{background:transparent;border:1px solid rgba(255,255,255,0.12);padding:12px 18px;border-radius:12px;color:#fff;cursor:pointer}
+    .hero-stats{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+    .pill{background:rgba(255,255,255,0.06);padding:10px 12px;border-radius:999px;color:#fff;font-weight:700}
+
+    .hero-controls{display:flex;gap:8px;margin-top:14px}
+    .hero-dot{width:12px;height:12px;border-radius:999px;border:1px solid rgba(255,255,255,0.4);background:transparent;cursor:pointer}
+    .hero-dot.active{background:var(--gold);border-color:var(--gold)}
+
+    /* subtle floating */
+    @keyframes floaty {0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+    .kicker{animation:floaty 6s var(--ease) infinite 0s}
+
+    /* =========================
+       Floating search card
+       ========================= */
+    .search-card{max-width:1260px;margin:-78px auto 36px;background:linear-gradient(180deg,#fff,#fbfbfb);padding:14px;border-radius:14px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:center;position:relative;z-index:6}
+    .search-card input,.search-card select{padding:12px;border-radius:12px;border:1px solid #e9eef0;background:white;font-size:15px;flex:1}
+    .search-btn{padding:12px 18px;border-radius:12px;background:var(--navy);color:white;border:none;font-weight:800}
+
+    /* =========================
+       Section base
+       ========================= */
+    section.major{padding:56px 0}
+    .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+    .section-title{font-size:24px;color:var(--navy);font-weight:700}
+    .section-sub{color:var(--muted);font-size:14px}
+
+    /* =========================
+       GRIDS & CARDS
+       ========================= */
+    .faculty-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .faculty-card{background:var(--card);padding:22px;border-radius:12px;border:1px solid rgba(8,16,24,0.04);box-shadow:var(--shadow);transition:transform .28s var(--ease)}
+    .faculty-card:hover{transform:translateY(-10px)}
+    .faculty-ico{width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--maroon));display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:18px;margin-bottom:10px}
+    .faculty-meta h4{margin-bottom:6px}
+    .faculty-meta p{margin:0;color:var(--muted);font-size:13px}
+
+    .featured-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);border-radius:12px;padding:16px;border:1px solid rgba(8,16,24,0.04);box-shadow:var(--shadow)}
+    .card img{height:180px;object-fit:cover;border-radius:8px}
+
+    .carousel{display:flex;gap:14px;overflow:auto;padding:12px 6px;scroll-snap-type:x mandatory}
+    .carousel .tile{min-width:360px;flex:0 0 auto;border-radius:12px;background:var(--card);padding:14px;border:1px solid rgba(8,16,24,0.04);scroll-snap-align:center;box-shadow:0 10px 30px rgba(8,16,24,0.04)}
+    .course-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+    .course-item{padding:10px;border-radius:8px;background:#fbfbfb;border:1px solid #f0f0f2;font-weight:700;color:#233}
+
+    .courses-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .course-card{background:linear-gradient(180deg,#fff,#fff);padding:14px;border-radius:10px;border:1px solid rgba(8,16,24,0.04);box-shadow:0 12px 36px rgba(8,16,24,0.04);transition:transform .24s var(--ease)}
+    .course-card:hover{transform:translateY(-8px)}
+    .course-code{font-weight:800;color:var(--maroon);font-size:16px}
+    .course-title{font-weight:700;margin-top:6px}
+
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .stat-card{background:linear-gradient(180deg,#fff,#fbfff8);padding:18px;border-radius:12px;border:1px solid rgba(8,16,24,0.04);text-align:center}
+
+    .timeline{display:flex;flex-direction:column;gap:14px}
+    .timeline-item{display:flex;gap:12px;align-items:flex-start;background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(8,16,24,0.04);box-shadow:var(--shadow)}
+
+    .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .gallery-item{position:relative;border-radius:12px;overflow:hidden}
+    .gallery-caption{position:absolute;left:10px;bottom:10px;background:rgba(4,8,12,0.6);color:#fff;padding:6px 10px;border-radius:8px;font-size:13px}
+
+    .testimonials{display:flex;gap:12px;overflow:auto;padding:12px;scroll-snap-type:x mandatory}
+    .quote{min-width:360px;flex:0 0 auto;background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(8,16,24,0.04);scroll-snap-align:center}
+
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .team-card{background:linear-gradient(180deg,#fff,#fffdf9);padding:12px;border-radius:12px;text-align:center;border:1px solid rgba(8,16,24,0.04)}
+
+    .faq .q{background:var(--card);border-radius:10px;padding:12px;border:1px solid rgba(8,16,24,0.04);margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between}
+    .faq .a{display:none;padding:10px 12px;background:#fbfbfb;border-radius:8px;margin-bottom:10px;border:1px solid #f0f0f2}
+
+    .map-card{height:320px;border-radius:12px;overflow:hidden;border:1px solid rgba(8,16,24,0.04)}
+    footer{background:linear-gradient(180deg,var(--navy),#062034);color:#fff;padding:56px 20px;margin-top:36px}
+    .footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:var(--maxw);margin:0 auto}
+
+    /* =========================
+       MICROS + REVEALS
+       ========================= */
+    .fade-up{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .fade-up.visible{opacity:1;transform:none}
+    .pulse{transition:transform .28s var(--ease)}.pulse:hover{transform:scale(1.04)}
+
+    /* =========================
+       RESPONSIVE (desktop-first)
+       ========================= */
+    @media (max-width:1280px){
+      .faculty-grid{grid-template-columns:repeat(3,1fr)}
+      .featured-grid{grid-template-columns:repeat(2,1fr)}
+      .courses-grid{grid-template-columns:repeat(3,1fr)}
+      .gallery-grid{grid-template-columns:repeat(3,1fr)}
+      .team-grid{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width:980px){
+      .hero-inner{flex-direction:column;align-items:flex-start}
+      .hero-right{display:none}
+      .faculty-grid{grid-template-columns:repeat(2,1fr)}
+      .courses-grid{grid-template-columns:repeat(2,1fr)}
+      .team-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:680px){
+      .faculty-grid,.featured-grid,.courses-grid,.gallery-grid,.team-grid{grid-template-columns:1fr}
+      nav.nav-links{display:none}
+      .hero h1{font-size:28px}
+      .search-card{margin:0 12px}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <header class="topbar" role="banner">
+    <div class="wrap nav" role="navigation" aria-label="Main navigation">
+      <div class="brand">
+        <!-- ABU image from Wikimedia Commons (used as brand emblem) -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Ahmadu_Bello_University.jpg/800px-Ahmadu_Bello_University.jpg" alt="ABU emblem">
+        <div>
+          <h4>ABU Past Questions Hub</h4>
+          <div style="font-size:13px;color:var(--muted)">Student-built • Community-moderated • Free for ABU</div>
+        </div>
+      </div>
+
+      <nav class="nav-links" aria-label="Primary links">
+        <a href="#faculties">Faculties</a>
+        <a href="#courses">Courses</a>
+        <a href="#research">Research</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#timeline">History</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-actions" role="toolbar" aria-label="Top actions">
+        <button class="btn ghost" onclick="openUpload()">Upload</button>
+        <button class="btn" onclick="document.getElementById('searchInput').focus()">Search</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SLIDER -->
+  <section class="hero" role="region" aria-label="Hero">
+    <!-- slide 1: ABU main campus (Commons) -->
+    <div id="slide1" class="hero-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/4/46/Ahmadu_Bello_University%2C_Main_Campus%2C_Zaria_-_Nigeria.jpg');opacity:1;"></div>
+    <!-- slide 2: Unsplash lecture hall -->
+    <div id="slide2" class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1549004477-9aa9868487f9?q=80&w=1800&auto=format&fit=crop');opacity:0;"></div>
+    <!-- slide 3: Kashim Ibrahim Library (Commons) -->
+    <div id="slide3" class="hero-slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/3/32/Front_view_of_Kashim_Ibrahim_Library.jpg');opacity:0;"></div>
+
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner wrap">
+      <div class="hero-left">
+        <span class="kicker">AHMADU BELLO UNIVERSITY — SAMARU</span>
+        <h1 class="fade-up">ABU Past Questions Hub — study smarter, together</h1>
+        <p class="fade-up" style="transition-delay:.06s">A community-moderated library of past exam papers, marking schemes and curated study bundles across every ABU faculty and department. Search, download, and contribute responsibly.</p>
+
+        <div class="hero-ctas fade-up" style="transition-delay:.12s">
+          <button class="cta-primary" onclick="document.getElementById('searchInput').focus()">Search Past Questions</button>
+          <button class="cta-alt" onclick="openUpload()">Contribute PDF</button>
+          <button class="btn ghost" onclick="window.scrollTo({top:document.getElementById('courses').offsetTop - 80, behavior:'smooth'})">Browse Courses</button>
+        </div>
+
+        <div class="hero-stats fade-up" style="transition-delay:.18s">
+          <div class="pill">11 Faculties</div>
+          <div class="pill">65+ Departments</div>
+          <div class="pill">5,000+ PDFs</div>
+          <div class="pill">Alumni Network</div>
+        </div>
+
+        <div class="hero-controls" aria-hidden="true">
+          <div class="hero-dot active" data-slide="1" onclick="setSlide(1)"></div>
+          <div class="hero-dot" data-slide="2" onclick="setSlide(2)"></div>
+          <div class="hero-dot" data-slide="3" onclick="setSlide(3)"></div>
+        </div>
+      </div>
+
+      <aside class="hero-right fade-up" style="transition-delay:.24s" aria-label="Quick tools">
+        <div class="card" style="background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.02));padding:18px;border-radius:12px;color:#fff;border:1px solid rgba(255,255,255,0.04)">
+          <h4 style="color:#fff;margin-bottom:8px">Quick Access</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn ghost" onclick="window.scrollTo({top:document.getElementById('faculties').offsetTop - 80, behavior:'smooth'})">Faculties</button>
+            <button class="btn ghost" onclick="window.scrollTo({top:document.getElementById('courses').offsetTop - 80, behavior:'smooth'})">Courses</button>
+            <button class="btn ghost" onclick="window.scrollTo({top:document.getElementById('gallery').offsetTop - 80, behavior:'smooth'})">Gallery</button>
+          </div>
+          <small style="display:block;margin-top:10px;color:rgba(255,255,255,0.85)">Sign in to bookmark & upload</small>
+        </div>
+
+        <div style="margin-top:14px" class="card pulse">
+          <h4 style="margin-bottom:8px">Mobile App</h4>
+          <p style="color:var(--muted);font-size:13px">Get the Android APK for offline reading & faster downloads.</p>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn">Download APK</button>
+            <button class="btn ghost" onclick="alert('Play Store coming soon')">Play Store</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SEARCH CARD -->
+  <div class="search-card wrap fade-up" style="transition-delay:.08s" role="search" aria-label="Search past questions">
+    <input id="searchInput" placeholder="Search e.g. PHCH 213, BCHM 254, 'Use of English'">
+    <select id="facultyFilter"><option value="">All Faculties</option><option>Pharmaceutical Sciences</option><option>Physical Sciences</option><option>Engineering</option><option>Arts</option></select>
+    <select id="levelFilter"><option value="">All Levels</option><option>100L</option><option>200L</option><option>300L</option><option>400L</option></select>
+    <button class="search-btn" onclick="doSearch()">Search</button>
+  </div>
+
+  <!-- QUICK TOOLS -->
+  <div class="wrap" style="padding:18px 28px 0 28px">
+    <div class="row fade-up" style="align-items:center">
+      <div style="flex:1">
+        <div class="quick-bar">
+          <button class="btn ghost">Recent Uploads</button>
+          <button class="btn ghost">Most Downloaded</button>
+          <button class="btn ghost">Exam Timetables</button>
+          <button class="btn ghost">Upload Guidelines</button>
+          <button class="btn ghost">Study Packs</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div style="font-size:13px;color:var(--muted)">Last updated: Sep 17, 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FACULTIES GRID -->
+  <section id="faculties" class="major wrap">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Faculties & Departments</h2>
+        <div class="section-sub">Click a faculty to explore departments and course packs</div>
+      </div>
+    </div>
+
+    <div class="faculty-grid fade-up" style="transition-delay:.16s">
+      <div class="faculty-card" onclick="openFaculty('Administration')">
+        <div class="faculty-ico">AD</div>
+        <div class="faculty-meta"><h4>Faculty of Administration</h4><p class="muted">Accounting • Business Admin • Local Government • Public Admin</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Agriculture')">
+        <div class="faculty-ico">AG</div>
+        <div class="faculty-meta"><h4>Faculty of Agriculture</h4><p class="muted">Agronomy • Animal Science • Soil Science • Crop Protection</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Arts')">
+        <div class="faculty-ico">AR</div>
+        <div class="faculty-meta"><h4>Faculty of Arts</h4><p class="muted">Languages & Cultures • English • History • Theatre</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Education')">
+        <div class="faculty-ico">ED</div>
+        <div class="faculty-meta"><h4>Faculty of Education</h4><p class="muted">Curriculum • Educational Psychology • Library Science</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Engineering')">
+        <div class="faculty-ico">EN</div>
+        <div class="faculty-meta"><h4>Faculty of Engineering</h4><p class="muted">Civil • Mechanical • Computer • Electrical</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Environmental Design')">
+        <div class="faculty-ico">ED</div>
+        <div class="faculty-meta"><h4>Environmental Design</h4><p class="muted">Architecture • Urban Planning • Quantity Surveying</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Law')">
+        <div class="faculty-ico">LW</div>
+        <div class="faculty-meta"><h4>Faculty of Law</h4><p class="muted">Commercial • Public • Private • Islamic Law</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Life Sciences')">
+        <div class="faculty-ico">LS</div>
+        <div class="faculty-meta"><h4>Life Sciences</h4><p class="muted">Biochemistry • Botany • Microbiology • Zoology</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Pharmaceutical Sciences')">
+        <div class="faculty-ico">PH</div>
+        <div class="faculty-meta"><h4>Pharmaceutical Sciences</h4><p class="muted">Clinical Pharmacy • Pharmacology • Pharmaceutics • Medicinal Chemistry</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Physical Sciences')">
+        <div class="faculty-ico">PS</div>
+        <div class="faculty-meta"><h4>Physical Sciences</h4><p class="muted">Chemistry • Physics • Mathematics • Geology • Statistics</p></div>
+      </div>
+
+      <div class="faculty-card" onclick="openFaculty('Social Sciences')">
+        <div class="faculty-ico">SS</div>
+        <div class="faculty-meta"><h4>Social Sciences</h4><p class="muted">Economics • Mass Comm • Political Science • Sociology</p></div>
+      </div>
+
+      <div class="faculty-card">
+        <div class="faculty-ico">+</div>
+        <div class="faculty-meta"><h4>Institutes & Centres</h4><p class="muted">Specialised research centres & extension services</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEDICATED FACULTY SPOTLIGHTS (expanded) -->
+  <section class="major wrap">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Faculty Spotlights</h2>
+        <div class="section-sub">Selected faculties in detail with departmental resources</div>
+      </div>
+    </div>
+
+    <!-- Pharmacy spotlight -->
+    <div class="row fade-up" style="gap:18px;margin-bottom:18px">
+      <div class="col card">
+        <!-- Pharmacy building / lab image (Unsplash placeholder) -->
+        <img src="https://images.unsplash.com/photo-1557426274-68b8c3f24f26?q=80&w=1400&auto=format&fit=crop" alt="Pharmacy lab">
+        <h3 style="margin-top:10px">Faculty of Pharmaceutical Sciences</h3>
+        <p class="muted">Clinical Pharmacy, Pharmacology, Pharmaceutics, Pharmaceutical Chemistry, Pharmacognosy.</p>
+        <a href="#">View department collections →</a>
+      </div>
+
+      <div class="col card">
+        <h4>Featured: Pharmacology & Therapeutics</h4>
+        <p class="muted">Course packs, past questions & marking schemes for PHCL/PHCG/PHCT series.</p>
+        <div style="display:flex;gap:8px;margin-top:10px"><button class="btn">Explore</button><button class="btn ghost">Save</button></div>
+      </div>
+    </div>
+
+    <!-- Life Sciences spotlight -->
+    <div class="row fade-up" style="gap:18px;margin-bottom:18px">
+      <div class="col card"><img src="https://images.unsplash.com/photo-1581091870622-3a4a5d2c1e6d?q=80&w=1400&auto=format&fit=crop" alt="Biology lab"><h3 style="margin-top:10px">Faculty of Life Sciences</h3><p class="muted">Biochemistry, Botany, Microbiology, Zoology resources & collections.</p><a href="#">Open collections →</a></div>
+
+      <div class="col card"><h4>Featured: Biochemistry</h4><p class="muted">Model answers & high-yield topics for BCHM series.</p><div style="display:flex;gap:8px;margin-top:10px"><button class="btn">Browse BCHM</button><button class="btn ghost">Contribute</button></div></div>
+    </div>
+
+    <!-- Physical Sciences spotlight -->
+    <div class="row fade-up" style="gap:18px">
+      <div class="col card"><img src="https://images.unsplash.com/photo-1526378726990-6e5be1f3a1d3?q=80&w=1400&auto=format&fit=crop" alt="Physics equipment"><h3 style="margin-top:10px">Faculty of Physical Sciences</h3><p class="muted">Chemistry, Physics, Mathematics, Geology & Statistics course packs and pasts.</p><a href="#">Explore →</a></div>
+
+      <div class="col card"><h4>Featured: Physics</h4><p class="muted">Problem sets and past finals for PHYS series.</p><div style="display:flex;gap:8px;margin-top:10px"><button class="btn">Open PHYS</button><button class="btn ghost">Download</button></div></div>
+    </div>
+  </section>
+
+  <!-- FEATURED COLLECTIONS -->
+  <section id="featured" class="major wrap">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Featured Collections</h2>
+        <div class="section-sub">Curated bundles & trending packs</div>
+      </div>
+      <div class="sm muted">Updated weekly</div>
+    </div>
+
+    <div class="featured-grid fade-up" style="transition-delay:.12s">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1400&auto=format&fit=crop" alt="BCHM bundle">
+        <h3 style="margin-top:10px">BCHM 254 — Biochemistry (200L) Bundle</h3>
+        <p class="muted">Past papers 2010–2024, marking schemes & quick topic maps.</p>
+        <div style="margin-top:12px;display:flex;gap:8px"><button class="btn">Open</button><button class="btn ghost">Save</button></div>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1541534401786-7c5f0b7d4e99?q=80&w=1400&auto=format&fit=crop" alt="GST collection">
+        <h3 style="margin-top:10px">GST 101 — Use Of English Set</h3>
+        <p class="muted">Most downloaded across ABU — fundamental practice pack.</p>
+        <div style="margin-top:12px;display:flex;gap:8px"><button class="btn">Open</button><button class="btn ghost">Save</button></div>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1400&auto=format&fit=crop" alt="Physics">
+        <h3 style="margin-top:10px">PHYS 214 — Electromagnetics Bundle</h3>
+        <p class="muted">Selected finals and tutorial problem solutions.</p>
+        <div style="margin-top:12px;display:flex;gap:8px"><button class="btn">Open</button><button class="btn ghost">Save</button></div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px" class="carousel fade-up">
+      <div class="tile card"><h4>Chemistry — CHEM 132 Set</h4><div class="course-list"><div class="course-item">CHEM 112</div><div class="course-item">CHEM 132</div></div></div>
+      <div class="tile card"><h4>Anatomy — ANAT 261</h4><div class="course-list"><div class="course-item">ANAT 261</div><div class="course-item">ANAT 362</div></div></div>
+      <div class="tile card"><h4>Pharmacology — PHCL Series</h4><div class="course-list"><div class="course-item">PHCL 204</div><div class="course-item">PHCH 302</div></div></div>
+    </div>
+  </section>
+
+  <!-- COURSES GRID (big, includes the courses you requested plus many more) -->
+  <section id="courses" class="major wrap">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Course Spotlight — Selected Past Questions</h2>
+        <div class="section-sub">Highlighted courses (click to open collection)</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="btn ghost" onclick="filterLevel('100L')">100L</button>
+        <button class="btn ghost" onclick="filterLevel('200L')">200L</button>
+        <button class="btn ghost" onclick="filterLevel('300L')">300L</button>
+        <button class="btn ghost" onclick="filterLevel('400L')">400L</button>
+      </div>
+    </div>
+
+    <!-- large grid: we include your specified courses explicitly -->
+    <div class="courses-grid fade-up" style="transition-delay:.18s">
+      <!-- PHCH 213 -->
+      <div class="course-card" data-level="200L" onclick="openCourse('PHCH 213')">
+        <div class="course-code">PHCH 213</div>
+        <div class="course-title">Pharmaceutical Chemistry II — Organic Reactions & Analysis</div>
+        <p class="muted">Past papers, marking schemes & model answers for PHCH 213.</p>
+      </div>
+
+      <!-- PHCH 212 -->
+      <div class="course-card" data-level="200L" onclick="openCourse('PHCH 212')">
+        <div class="course-code">PHCH 212</div>
+        <div class="course-title">Pharmaceutical Chemistry I — Introduction to Medicinal Chemistry</div>
+        <p class="muted">Collections include practicals & theory pasts.</p>
+      </div>
+
+      <!-- ANAT 261 -->
+      <div class="course-card" data-level="200L" onclick="openCourse('ANAT 261')">
+        <div class="course-code">ANAT 261</div>
+        <div class="course-title">Anatomy II — Systems & Regional Anatomy</div>
+        <p class="muted">Guide packs, diagrams & past finals for ANAT 261.</p>
+      </div>
+
+      <!-- BCHM 254 -->
+      <div class="course-card" data-level="200L" onclick="openCourse('BCHM 254')">
+        <div class="course-code">BCHM 254</div>
+        <div class="course-title">Biochemistry II — Metabolism & Enzymology</div>
+        <p class="muted">Past papers 2008–2024, exam tips & high-yield summaries.</p>
+      </div>
+
+      <!-- PHYS 162 -->
+      <div class="course-card" data-level="100L" onclick="openCourse('PHYS 162')">
+        <div class="course-code">PHYS 162</div>
+        <div class="course-title">Physics I — Mechanics & Waves</div>
+        <p class="muted">Problem sets and past questions for foundational physics.</p>
+      </div>
+
+      <!-- PHYS 214 -->
+      <div class="course-card" data-level="200L" onclick="openCourse('PHYS 214')">
+        <div class="course-code">PHYS 214</div>
+        <div class="course-title">Physics II — Electromagnetism & Optics</div>
+        <p class="muted">Selected finals with worked solutions.</p>
+      </div>
+
+      <!-- CHEM 132 -->
+      <div class="course-card" data-level="100L" onclick="openCourse('CHEM 132')">
+        <div class="course-code">CHEM 132</div>
+        <div class="course-title">General Chemistry — Physical Chemistry I</div>
+        <p class="muted">Tutorials and past problems for CHEM 132.</p>
+      </div>
+
+      <!-- CHEM 112 -->
+      <div class="course-card" data-level="100L" onclick="openCourse('CHEM 112')">
+        <div class="course-code">CHEM 112</div>
+        <div class="course-title">Introductory Chemistry — Inorganic Fundamentals</div>
+        <p class="muted">Beginner-friendly pasts & lab practical guides.</p>
+      </div>
+
+      <!-- BIOL 114 -->
+      <div class="course-card" data-level="100L" onclick="openCourse('BIOL 114')">
+        <div class="course-code">BIOL 114</div>
+        <div class="course-title">Biology — Cell Biology & Genetics</div>
+        <p class="muted">Past papers and short answer banks for BIOL 114.</p>
+      </div>
+
+      <!-- BIOL 112 -->
+      <div class="course-card" data-level="100L" onclick="openCourse('BIOL 112')">
+        <div class="course-code">BIOL 112</div>
+        <div class="course-title">General Biology — Introductory Concepts</div>
+        <p class="muted">Foundational pasts and scanning tips for BIOL 112.</p>
+      </div>
+
+      <!-- PHCT 214 -->
+      <div class="course-card" data-level="200L" onclick="openCourse('PHCT 214')">
+        <div class="course-code">PHCT 214</div>
+        <div class="course-title">Pharmaceutical Technology — Formulation & Dosage</div>
+        <p class="muted">Practical pasts and formulation problem sets for PHCT.</p>
+      </div>
+
+      <!-- PHCG 212 -->
+      <div class="course-card" data-level="200L" onclick="openCourse('PHCG 212')">
+        <div class="course-code">PHCG 212</div>
+        <div class="course-title">Pharmacognosy — Natural Products Chemistry</div>
+        <p class="muted">Past questions, herb identification guides & lab notes.</p>
+      </div>
+
+      <!-- PHCL 204 -->
+      <div class="course-card" data-level="200L" onclick="openCourse('PHCL 204')">
+        <div class="course-code">PHCL 204</div>
+        <div class="course-title">Pharmacology II — Drug Actions & Interactions</div>
+        <p class="muted">Model answers for pharmacology exam questions.</p>
+      </div>
+
+      <!-- PHCH 302 -->
+      <div class="course-card" data-level="300L" onclick="openCourse('PHCH 302')">
+        <div class="course-code">PHCH 302</div>
+        <div class="course-title">Advanced Pharmaceutical Chemistry — Spectroscopy & Analysis</div>
+        <p class="muted">Selected papers and guided solutions for PHCH 302.</p>
+      </div>
+
+      <!-- Additional course placeholders to expand the grid -->
+      <div class="course-card" data-level="200L" onclick="openCourse('MTH 121')">
+        <div class="course-code">MTH 121</div><div class="course-title">Calculus I</div><p class="muted">Past examinations & tutorial sheets for MTH 121.</p>
+      </div>
+
+      <div class="course-card" data-level="300L" onclick="openCourse('ENGR 301')">
+        <div class="course-code">ENGR 301</div><div class="course-title">Thermodynamics</div><p class="muted">Engineering pasts & solved problems.</p>
+      </div>
+
+      <div class="course-card" data-level="400L" onclick="openCourse('LAW 401')">
+        <div class="course-code">LAW 401</div><div class="course-title">Commercial Law</div><p class="muted">Past papers & case law analysis.</p>
+      </div>
+
+      <div class="course-card" data-level="300L" onclick="openCourse('ECO 301')">
+        <div class="course-code">ECO 301</div><div class="course-title">Intermediate Microeconomics</div><p class="muted">Exam sets & model solutions for ECO 301.</p>
+      </div>
+    </div>
+
+    <!-- LOAD MORE (visual) -->
+    <div style="text-align:center;margin-top:18px;">
+      <button class="btn" onclick="alert('Load more (demo)')">Load more courses</button>
+      <button class="btn ghost" onclick="alert('CSV export (demo)')">Export list</button>
+    </div>
+  </section>
+
+  <!-- EXTENDED TIMELINE -->
+  <section id="timeline" class="major wrap">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">History of ABU — Milestones</h2>
+        <div class="section-sub">Key events and campus development</div>
+      </div>
+    </div>
+
+    <div class="timeline fade-up">
+      <div class="timeline-item">
+        <div style="flex:0 0 130px"><img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Ahmadu_Bello_University%2C_Main_Campus%2C_Zaria_-_Nigeria.jpg" alt="Main campus (Commons)"></div>
+        <div>
+          <h4>1962 — Founding</h4>
+          <p class="muted">Ahmadu Bello University opened, originally as the University of Northern Nigeria. The institution expanded rapidly during its early decades.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div style="flex:0 0 130px"><img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Front_view_of_Kashim_Ibrahim_Library.jpg" alt="Kashim Library (Commons)"></div>
+        <div>
+          <h4>1970s–1990s — Library & Growth</h4>
+          <p class="muted">Kashim Ibrahim Library and campus facilities expanded; new faculties were established.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div style="flex:0 0 130px"><img src="https://upload.wikimedia.org/wikipedia/commons/4/10/Gate_of_Ahmadu_Bello_University_Zaria_01.jpg" alt="Main gate (Commons)"></div>
+        <div>
+          <h4>2000s — Modernisation</h4>
+          <p class="muted">Campus modernisation projects started, increased digital services and research centres.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div style="flex:0 0 130px"><img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Green_Landscape_at_Ahmadu_Bello_University_Campus%2C_Zaria.png" alt="Campus garden (Commons)"></div>
+        <div>
+          <h4>Present — Digital Initiatives</h4>
+          <p class="muted">Increased digitisation of archives, student-led tech solutions like this hub help expand access to learning resources.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH CENTRES -->
+  <section id="research" class="major wrap">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title">Research & Innovation</h2>
+        <div class="section-sub">Selected centres and featured projects</div>
+      </div>
+    </div>
+
+    <div class="row fade-up">
+      <div class="col card"><img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?q=80&w=1400&auto=format&fit=crop" alt=""><h3 style="margin-top:10px">Centre for Dryland Agriculture</h3><p class="muted">Research on drought-resistant crops, soil conservation and smallholder support.</p><a href="#">Projects →</a></div>
+      <div class="col card"><img src="https://images.unsplash.com/photo-1541534401786-7c5f0b7d4e99?q=80&w=1400&auto=format&fit=crop" alt=""><h3 style="margin-top:10px">Biotechnology Institute</h3><p class="muted">Biotech research with student & faculty collaborations.</p><a href="#">Publications →</a></div>
+      <div class="col card"><img src="https://images.unsplash.com/photo-1581091870622-3a4a5d2c1e6d?q=80&w=1400&auto=format&fit=crop" alt=""><h3 style="margin-top:10px">Water & Environmental Studies</h3><p class="muted">Water resources research, environmental engineering & sustainability projects.</p><a href="#">Learn →</a></div>
+    </div>
+
+    <!-- Research highlights (long list) -->
+    <div style="margin-top:18px" class="featured-grid fade-up">
+      <div class="card"><h4>Malaria Diagnostics Project</h4><p class="muted">Student-led research on low-cost diagnostics deployed in rural clinics.</p></div>
+      <div class="card"><h4>Soil Fertility Studies</h4><p class="muted">Longitudinal trials for smallholder yield improvement.</p></div>
+      <div class="card"><h4>Renewable Energy Systems</h4><p class="muted">Microgrid design & implementation at remote campuses.</p></div>
+    </div>
+  </section>
+
+  <!-- LIBRARY & DIGITAL ARCHIVE -->
+  <section id="library" class="major wrap">
+    <div class="section-head">
+      <div><h2 class="section-title">Kashim Ibrahim Library & Digital Archives</h2><div class="section-sub">Physical collections, e-journals and scanned pasts</div></div>
+    </div>
+
+    <div class="row fade-up">
+      <div class="col card"><img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Front_view_of_Kashim_Ibrahim_Library.jpg" alt="Kashim Ibrahim Library"><h3 style="margin-top:10px">Kashim Ibrahim Library</h3><p class="muted">Main library with special collections and digital access.</p><a href="#">Visit library site →</a></div>
+      <div class="col card"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop" alt=""><h3 style="margin-top:10px">Digital Archives</h3><p class="muted">Scanned past questions, theses and dissertations available for students.</p><a href="#">Open archive →</a></div>
+      <div class="col card"><img src="https://images.unsplash.com/photo-1517213849290-bbbfffdc6da4?q=80&w=1400&auto=format&fit=crop" alt=""><h3 style="margin-top:10px">Reading Rooms</h3><p class="muted">Quiet & group study rooms with booking system.</p><a href="#">Book a room →</a></div>
+    </div>
+  </section>
+
+  <!-- CAMPUS GALLERY -->
+  <section id="gallery" class="major wrap">
+    <div class="section-head">
+      <div><h2 class="section-title">Campus Gallery</h2><div class="section-sub">Samaru campus, library, gates and events</div></div>
+    </div>
+
+    <div class="gallery-grid fade-up">
+      <div class="gallery-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Ahmadu_Bello_University%2C_Main_Campus%2C_Zaria_-_Nigeria.jpg" alt="Main Campus">
+        <div class="gallery-caption">Main Campus — Wikimedia Commons. <a href="https://commons.wikimedia.org/wiki/File:Ahmadu_Bello_University,_Main_Campus,_Zaria_-_Nigeria.jpg" target="_blank" style="color:#fff;text-decoration:underline">View file</a></div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Front_view_of_Kashim_Ibrahim_Library.jpg" alt="Kashim Library">
+        <div class="gallery-caption">Kashim Ibrahim Library — Wikimedia Commons. <a href="https://commons.wikimedia.org/wiki/File:Front_view_of_Kashim_Ibrahim_Library.jpg" target="_blank" style="color:#fff;text-decoration:underline">View file</a></div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/10/Gate_of_Ahmadu_Bello_University_Zaria_01.jpg" alt="Main Gate">
+        <div class="gallery-caption">Main Gate — Wikimedia Commons. <a href="https://commons.wikimedia.org/wiki/File:Gate_of_Ahmadu_Bello_University_Zaria_01.jpg" target="_blank" style="color:#fff;text-decoration:underline">View file</a></div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Green_Landscape_at_Ahmadu_Bello_University_Campus%2C_Zaria.png" alt="Campus Garden">
+        <div class="gallery-caption">Campus Garden — Wikimedia Commons. <a href="https://commons.wikimedia.org/wiki/File:Green_Landscape_at_Ahmadu_Bello_University_Campus%2C_Zaria.png" target="_blank" style="color:#fff;text-decoration:underline">View file</a></div>
+      </div>
+    </div>
+
+    <small style="display:block;margin-top:8px;color:var(--muted)">Tip: click the 'View file' links to download original Wikimedia Commons images and replace the src with the original upload.wikimedia.org URLs if you want exact full-resolution embedding.</small>
+  </section>
+
+  <!-- SCHOLARSHIPS & OPPORTUNITIES -->
+  <section class="major wrap">
+    <div class="section-head">
+      <div><h2 class="section-title">Scholarships & Grants</h2><div class="section-sub">Funding & internships for ABU students</div></div>
+    </div>
+
+    <div class="row fade-up">
+      <div class="col card"><h4>Quintar Grant</h4><p class="muted">Support for final-year research in health & agriculture. Apply by Oct 20, 2025.</p><a href="#">Apply →</a></div>
+      <div class="col card"><h4>Alumni Research Fund</h4><p class="muted">Small project grants for undergrad research assistance.</p><a href="#">Details →</a></div>
+      <div class="col card"><h4>Conference Travel Grants</h4><p class="muted">Support for presenting at regional conferences.</p><a href="#">Learn →</a></div>
+    </div>
+  </section>
+
+  <!-- STUDENT VOICES -->
+  <section class="major wrap">
+    <div class="section-head"><div><h2 class="section-title">Student Voices</h2><div class="section-sub">How students use the hub</div></div></div>
+
+    <div id="testimonials" class="testimonials fade-up">
+      <div class="quote"><strong>"This hub transformed how I revise—structured and reliable."</strong><div class="muted" style="margin-top:8px">— Amina, Pharmacy</div></div>
+      <div class="quote"><strong>"Uploading pasts for my cohort helped everyone improve."</strong><div class="muted" style="margin-top:8px">— Musa, Engineering</div></div>
+      <div class="quote"><strong>"Marking schemes clarified grading criteria and improved scores."</strong><div class="muted" style="margin-top:8px">— Zainab, Arts</div></div>
+    </div>
+  </section>
+
+  <!-- CAREER & MENTORSHIP -->
+  <section class="major wrap">
+    <div class="section-head"><div><h2 class="section-title">Career Services & Mentors</h2><div class="section-sub">Internships, CV clinics & alumni mentors</div></div></div>
+
+    <div class="row fade-up">
+      <div class="col card"><h4>Career Hub</h4><p class="muted">Job boards, internship listings & application templates.</p><a href="#">Open hub →</a></div>
+      <div class="col card"><h4>Mentorship Program</h4><p class="muted">Connect with alumni mentors from your faculty.</p><a href="#">Find a mentor →</a></div>
+      <div class="col card"><h4>CV & Interview Clinics</h4><p class="muted">Weekly sessions to polish applications.</p><a href="#">Schedule →</a></div>
+    </div>
+  </section>
+
+  <!-- ACADEMIC CALENDAR -->
+  <section class="major wrap">
+    <div class="section-head"><div><h2 class="section-title">Academic Calendar & Notices</h2><div class="section-sub">Important dates and faculty announcements</div></div></div>
+
+    <div class="row fade-up">
+      <div class="col card"><strong>Exam Timetable</strong><p class="muted">Finals schedule published on faculty boards.</p><div class="sm muted">Published Aug 15, 2025</div></div>
+      <div class="col card"><strong>Orientation</strong><p class="muted">Freshers orientation and registration details posted.</p><div class="sm muted">Sept 5–7, 2025</div></div>
+      <div class="col card"><strong>Convocation</strong><p class="muted">Graduation ceremony schedules & guest info.</p><div class="sm muted">Dec 12–16, 2025</div></div>
+    </div>
+  </section>
+
+  <!-- BLOG & GUIDES (expanded) -->
+  <section class="major wrap">
+    <div class="section-head"><div><h2 class="section-title">Blog & Study Guides</h2><div class="section-sub">Advice, scanning tips & study plans</div></div></div>
+
+    <div class="featured-grid fade-up">
+      <article class="card"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop" alt=""><h3 style="margin-top:10px">How to use past questions effectively</h3><p class="muted">Study strategies to focus on concepts, not memorization.</p><a href="#">Read →</a></article>
+
+      <article class="card"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1400&auto=format&fit=crop" alt=""><h3 style="margin-top:10px">Scanning PDFs with your phone</h3><p class="muted">Produce legible PDFs and best upload practices.</p><a href="#">Read →</a></article>
+
+      <article class="card"><img src="https://images.unsplash.com/photo-1509099836639-18ba5d4b9c0b?q=80&w=1400&auto=format&fit=crop" alt=""><h3 style="margin-top:10px">Time management for finals</h3><p class="muted">Weekly templates & high-yield schedules to maximize retention.</p><a href="#">Read →</a></article>
+    </div>
+
+    <!-- expanded articles -->
+    <div style="margin-top:18px" class="featured-grid fade-up">
+      <article class="card"><h4>Study groups — how to run effective sessions</h4><p class="muted">Guidelines for productive peer study groups.</p></article>
+      <article class="card"><h4>Top 10 high-yield topics for BCHM 254</h4><p class="muted">Instructor-curated list of high-probability topics.</p></article>
+      <article class="card"><h4>Exam-day checklist</h4><p class="muted">What to bring & how to prepare on exam day.</p></article>
+    </div>
+  </section>
+
+  <!-- TEAM & PARTNERS -->
+  <section class="major wrap">
+    <div class="section-head"><div><h2 class="section-title">Team & Partners</h2><div class="section-sub">Students, volunteers & supporting organisations</div></div></div>
+
+    <div class="team-grid fade-up">
+      <div class="team-card"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop" alt=""><h4 style="margin-top:10px">Ahmed A.</h4><div class="muted">Founder</div></div>
+      <div class="team-card"><img src="https://images.unsplash.com/photo-1545996124-9b1b3a8b7e30?q=80&w=800&auto=format&fit=crop" alt=""><h4 style="margin-top:10px">Precious A.</h4><div class="muted">Operations</div></div>
+      <div class="team-card"><img src="https://images.unsplash.com/photo-1541529086526-1e2f1b7b3f2c?q=80&w=800&auto=format&fit=crop" alt=""><h4 style="margin-top:10px">Jemimah O.</h4><div class="muted">Finance</div></div>
+      <div class="team-card"><img src="https://images.unsplash.com/photo-1545996124-4b4fb29a6d?q=80&w=800&auto=format&fit=crop" alt=""><h4 style="margin-top:10px">Volunteers</h4><div class="muted">Moderation</div></div>
+    </div>
+
+    <div style="margin-top:14px" class="sponsors fade-up">
+      <div class="card" style="display:inline-block;padding:12px;border-radius:8px">Quintar Foundation</div>
+      <div class="card" style="display:inline-block;padding:12px;border-radius:8px">PANS Public Health</div>
+      <div class="card" style="display:inline-block;padding:12px;border-radius:8px">Nurul Huda</div>
+    </div>
+  </section>
+
+  <!-- CONTACT & MAP -->
+  <section class="major wrap">
+    <div class="section-head"><div><h2 class="section-title">Contact & Campus Map</h2><div class="section-sub">Location, emails & how to reach Samaru, Zaria</div></div></div>
+
+    <div class="row fade-up">
+      <div class="col card">
+        <h4>Contact</h4>
+        <p class="muted">Email: support@abupastquestions.org (demo) • Phone: +234 800 000 0000</p>
+        <p class="muted">Address: Samaru, Zaria — Ahmadu Bello University main campus</p>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <a href="#" class="btn ghost">Report issue</a>
+          <a href="#" class="btn">Help centre</a>
+        </div>
+      </div>
+
+      <div class="col card map-card">
+        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=7.7168%2C11.1125%2C7.7368%2C11.1325&amp;layer=mapnik" style="border:0;width:100%;height:100%"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="major wrap">
+    <div class="section-head">
+      <div><h2 class="section-title">Frequently Asked Questions</h2><div class="section-sub">Common questions about uploading, access and usage</div></div>
+    </div>
+
+    <div class="faq fade-up">
+      <div class="q" onclick="toggleFaq(0)">How do I upload a PDF?<span class="sm muted"> — click</span></div>
+      <div class="a">Click <strong>Upload</strong>, choose your PDF, fill metadata (faculty, department, level, course code) and submit. Submissions are moderated before publication.</div>
+
+      <div class="q" onclick="toggleFaq(1)">Who can upload?</div>
+      <div class="a">Any ABU student. For departmental packs, coordinate with class representatives for bulk uploads.</div>
+
+      <div class="q" onclick="toggleFaq(2)">Is the hub free?</div>
+      <div class="a">Yes — free for ABU students and staff.</div>
+
+      <div class="q" onclick="toggleFaq(3)">Where are uploaded PDFs stored?</div>
+      <div class="a">In production we will use secure cloud storage (e.g., Firebase Storage or S3) and store metadata in a database (Firestore / Postgres). I can integrate this when you're ready.</div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section class="major wrap" style="text-align:center">
+    <h2 class="section-title">Contribute & Support</h2>
+    <p class="muted">Upload your pasts to help hundreds of students. Small acts of sharing make big changes.</p>
+    <div style="margin-top:12px;display:flex;justify-content:center;gap:12px">
+      <button class="btn" onclick="openUpload()">Upload Past Questions</button>
+      <button class="btn ghost" onclick="alert('Contribute via GitHub (demo)')">Contribute code</button>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="major wrap">
+    <div class="newsletter fade-up" style="display:flex;gap:12px;align-items:center;">
+      <input placeholder="Enter your ABU email for weekly highlights" style="flex:1;padding:12px;border-radius:12px;border:1px solid #e9eef0">
+      <button class="btn">Subscribe</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid wrap">
+      <div>
+        <h4 style="color:#fff">About</h4>
+        <p style="color:rgba(255,255,255,0.95)">Student-run repository of past questions & study resources for Ahmadu Bello University — Samaru. Built to provide equitable access to study materials.</p>
+      </div>
+
+      <div>
+        <h4 style="color:#fff">Quick Links</h4>
+        <ul style="list-style:none;padding:0;margin:0;color:rgba(255,255,255,0.95)">
+          <li><a href="#faculties">Faculty Pages</a></li>
+          <li><a href="#courses">Course Collections</a></li>
+          <li><a href="#library">Digital Archive</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="color:#fff">ABU Images (Wikimedia Commons)</h4>
+        <ul style="list-style:none;padding:0;margin:0;color:rgba(255,255,255,0.95);font-size:14px">
+          <li><a href="https://commons.wikimedia.org/wiki/File:Ahmadu_Bello_University,_Main_Campus,_Zaria_-_Nigeria.jpg" target="_blank" style="color:#fff">Main Campus (Commons)</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Front_view_of_Kashim_Ibrahim_Library.jpg" target="_blank" style="color:#fff">Kashim Ibrahim Library</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/File:Gate_of_Ahmadu_Bello_University_Zaria_01.jpg" target="_blank" style="color:#fff">Main Gate</a></li>
+          <li><a href="https://commons.wikimedia.org/wiki/Category:Ahmadu_Bello_University" target="_blank" style="color:#fff">More on Commons</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="color:#fff">Connect</h4>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <a href="#" style="background:rgba(255,255,255,0.06);padding:8px;border-radius:8px;color:#fff">Facebook</a>
+          <a href="#" style="background:rgba(255,255,255,0.06);padding:8px;border-radius:8px;color:#fff">Instagram</a>
+          <a href="#" style="background:rgba(255,255,255,0.06);padding:8px;border-radius:8px;color:#fff">Twitter</a>
+        </div>
+        <small style="display:block;margin-top:12px;color:rgba(255,255,255,0.9)">Built by ABU students • contact@abupastquestions.org</small>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;color:rgba(255,255,255,0.9);font-size:14px">
+      &copy; 2025 ABU Past Questions Hub — All rights reserved
+    </div>
+  </footer>
+
+  <!-- UPLOAD MODAL (demo) -->
+  <div id="uploadModal" style="display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:rgba(6,12,22,0.6);z-index:400">
+    <div style="width:880px;background:#fff;border-radius:12px;padding:18px;box-shadow:0 28px 68px rgba(8,12,20,0.16)">
+      <h3>Upload Past Question (Demo)</h3>
+      <p class="muted">Select a PDF and fill metadata. This demo simulates an upload; I can integrate Firebase Storage + Firestore when you want real uploads.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+        <input type="file" id="fileInput" accept="application/pdf" />
+        <div style="display:flex;gap:8px">
+          <select id="modalFaculty" style="flex:1;padding:10px;border-radius:8px;border:1px solid #e9eef0">
+            <option>Faculty</option><option>Agriculture</option><option>Pharmaceutical Sciences</option><option>Engineering</option>
+          </select>
+          <select id="modalDept" style="flex:1;padding:10px;border-radius:8px;border:1px solid #e9eef0">
+            <option>Department</option><option>Biochemistry</option><option>Pharmacology</option><option>Chemistry</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:8px">
+          <select id="modalLevel" style="padding:10px;border-radius:8px;border:1px solid #e9eef0">
+            <option>Level</option><option>100L</option><option>200L</option><option>300L</option>
+          </select>
+          <input id="modalCourse" placeholder="Course code e.g. PHCH 213" style="flex:1;padding:10px;border-radius:8px;border:1px solid #e9eef0" />
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:8px">
+          <button class="btn ghost" onclick="closeUpload()">Cancel</button>
+          <button class="btn" onclick="fakeUpload()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================
+       SCRIPTS: interactions, reveals, slider, carousels
+       ========================= -->
+  <script>
+    // Modal demo
+    function openUpload(){ document.getElementById('uploadModal').style.display='flex'; }
+    function closeUpload(){ document.getElementById('uploadModal').style.display='none'; }
+    function fakeUpload(){
+      const f = document.getElementById('fileInput').files[0];
+      if(!f){ alert('Please choose a PDF (demo).'); return; }
+      alert('Demo upload received: ' + f.name + '\\nIn production, file would be uploaded to cloud storage and metadata saved to a database.');
+      closeUpload();
+    }
+
+    // Search demo
+    function doSearch(){
+      const q = document.getElementById('searchInput').value.trim();
+      const fac = document.getElementById('facultyFilter').value;
+      const lvl = document.getElementById('levelFilter').value;
+      if(!q && !fac && !lvl){ alert('Type a course code or pick filters (demo).'); return; }
+      alert('Searching (demo): ' + (q||'[any]') + ' • Faculty: ' + (fac||'All') + ' • Level: ' + (lvl||'All'));
+    }
+
+    // Open faculty & course functions (demo)
+    function openFaculty(name){
+      alert('Open faculty (demo): ' + name + '\\nIn production this would navigate to a faculty page listing departments and course collections.');
+      window.scrollTo({top:document.getElementById('courses').offsetTop - 80, behavior:'smooth'});
+    }
+    function openCourse(code){
+      alert('Open course (demo): ' + code + '\\nIn production this would show the course collection page with PDF list and download links.');
+    }
+
+    // FAQ toggle
+    function toggleFaq(i){
+      const ans = document.querySelectorAll('.faq .a');
+      if(!ans[i]) return;
+      ans[i].style.display = ans[i].style.display === 'block' ? 'none' : 'block';
+    }
+
+    // IntersectionObserver reveal
+    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); } }); }, {threshold:0.12});
+    document.querySelectorAll('.fade-up, .faculty-card, .card, .course-card, .tile, .quote, .team-card, .gallery-item').forEach(el=>io.observe(el));
+
+    // Hero slider auto-rotate
+    let currentSlide = 1;
+    function setSlide(n){
+      for(let i=1;i<=3;i++){
+        document.getElementById('slide'+i).style.opacity = (i===n? '1':'0');
+        document.querySelectorAll('.hero-dot')[i-1].classList.toggle('active', i===n);
+      }
+      currentSlide = n;
+    }
+    setInterval(()=>{ setSlide(currentSlide===3?1:currentSlide+1); }, 7000);
+
+    // Carousel auto-scroll for tiles & testimonials
+    (function autoScroll(selector, step=360, ms=4200){
+      const el = document.querySelector(selector);
+      if(!el) return;
+      let pos = 0;
+      setInterval(()=>{ pos += step; if(pos > el.scrollWidth - el.clientWidth) pos = 0; el.scrollTo({left: pos, behavior:'smooth'}); }, ms);
+    })('.carousel', 360, 4500);
+
+    (function testCarousel(){
+      const el = document.getElementById('testimonials');
+      if(!el) return;
+      let p = 0; setInterval(()=>{ p += 380; if(p > el.scrollWidth - el.clientWidth) p = 0; el.scrollTo({left: p, behavior:'smooth'}); }, 5200);
+    })();
+
+    // Parallax effect on hero
+    window.addEventListener('scroll', function(){
+      const slides = document.querySelectorAll('.hero-slide');
+      if(!slides.length) return;
+      const sc = window.scrollY / 8;
+      slides.forEach(s => s.style.transform = 'translateY(' + (sc * -0.25) + 'px) scale(1.02)');
+    });
+
+    // Simple filtering demo for course cards
+    function filterLevel(level){
+      document.querySelectorAll('.course-card').forEach(c => {
+        if(!level){ c.style.display='block'; return; }
+        c.style.display = c.dataset.level === level ? 'block' : 'none';
+      });
+    }
+
+    // Keyboard esc to close modal
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeUpload(); });
+
+    // Accessibility hint: focus search on load (desktop)
+    document.addEventListener('DOMContentLoaded', ()=>{ if(window.innerWidth > 800) document.getElementById('searchInput').focus(); });
+  </script>
+</body>
+</html>
